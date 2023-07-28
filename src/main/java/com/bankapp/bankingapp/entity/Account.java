@@ -2,9 +2,9 @@ package com.bankapp.bankingapp.entity;
 
 import jakarta.persistence.*;
 
-
-@MappedSuperclass
-public class Account {
+@Entity
+@Inheritance (strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Account {
     @Id
     protected String accountNumber;
     protected double balance;
@@ -15,17 +15,19 @@ public class Account {
 
     @ManyToOne
     @JoinColumn (name= "customer_id")
-    protected Customer customer;
+    protected Customer accountHolder;
 
-
+    @ManyToOne
+    @JoinColumn (name= "employee_id")
+    protected Employee employee;
     public Account() {
     }
 
-    public Account(double balance, String alias, Branch branch, Customer customer) {
+    public Account(double balance, String alias, Branch branch, Customer accountHolder) {
         this.balance = balance;
         this.alias = alias;
         this.branch = branch;
-        this.customer = customer;
+        this.accountHolder = accountHolder;
     }
 
     public String getAccountNumber() {
@@ -56,11 +58,11 @@ public class Account {
         this.branch = branch;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Customer getAccountHolder() {
+        return accountHolder;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setAccountHolder(Customer accountHolder) {
+        this.accountHolder = accountHolder;
     }
 }

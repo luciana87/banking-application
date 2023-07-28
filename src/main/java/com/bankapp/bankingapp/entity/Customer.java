@@ -9,23 +9,20 @@ import java.util.List;
 @Entity
 public class Customer extends Person {
     private int customerNumber;
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private List<CurrentAccount> currentAccountList;
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private List<SavingsAccount> savingsAccountList;
+    @OneToMany(mappedBy = "accountHolder", fetch = FetchType.LAZY)
+    private List<Account> accounts;
+
     public Customer(){
 
     }
 
-    public Customer(List<CurrentAccount> currentAccountList, List<SavingsAccount> savingsAccountList) {
-        this.currentAccountList = currentAccountList;
-        this.savingsAccountList = savingsAccountList;
+    public Customer(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
-    public Customer(String name, String lastName, String cardNumber, long phoneNumber, String email, Address address, List<CurrentAccount> currentAccountList, List<SavingsAccount> savingsAccountList) {
+    public Customer(String name, String lastName, String cardNumber, long phoneNumber, String email, Address address, List<Account> accounts) {
         super(name, lastName, cardNumber, phoneNumber, email, address);
-        this.currentAccountList = currentAccountList;
-        this.savingsAccountList = savingsAccountList;
+        this.accounts = accounts;
     }
 
     public int getCustomerNumber() {
@@ -36,19 +33,11 @@ public class Customer extends Person {
         this.customerNumber = customerNumber;
     }
 
-    public List<CurrentAccount> getCurrentAccountList() {
-        return currentAccountList;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setCurrentAccountList(List<CurrentAccount> currentAccountList) {
-        this.currentAccountList = currentAccountList;
-    }
-
-    public List<SavingsAccount> getSavingsAccountList() {
-        return savingsAccountList;
-    }
-
-    public void setSavingsAccountList(List<SavingsAccount> savingsAccountList) {
-        this.savingsAccountList = savingsAccountList;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 }

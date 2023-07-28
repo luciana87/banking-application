@@ -23,6 +23,10 @@ public class Bank {
         return bankCode;
     }
 
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
     public String getName() {
         return name;
     }
@@ -31,4 +35,11 @@ public class Bank {
         this.name = name;
     }
 
+    public List<Branch> getBranchList() {
+        return branchList;
+    }
+
+    public void setBranchList(List<Branch> branchList) {
+        this.branchList = branchList;
+    }
 }

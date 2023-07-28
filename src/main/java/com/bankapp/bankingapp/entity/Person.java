@@ -6,7 +6,7 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToOne;
 
 @MappedSuperclass
-public class Person {
+public abstract class Person {
     @Id
     private  Integer id;
     protected String name;
