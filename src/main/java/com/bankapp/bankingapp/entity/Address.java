@@ -1,5 +1,6 @@
 package com.bankapp.bankingapp.entity;
 
+import com.bankapp.bankingapp.exceptions.ResourceNotFoundException;
 import jakarta.persistence.*;
 
 @Entity
@@ -66,5 +67,27 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public void modifyAttributeValue(String attributeName, Object newValue) {
+        switch (attributeName) {
+            case "street" :
+                this.street = (String) newValue;
+                break;
+            case "city" :
+                this.city = (String) newValue;
+                break;
+            case "state" :
+                this.state = (String) newValue;
+                break;
+            case "postal_code" :
+                this.postalCode = (String) newValue;
+                break;
+            case "country" :
+                this.country = (String) newValue;
+                break;
+            default:
+                throw new ResourceNotFoundException("No se permite modificar un campo solicitado");
+        }
     }
 }
