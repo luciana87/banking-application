@@ -1,5 +1,6 @@
 package com.bankapp.bankingapp.controller;
 
+import com.bankapp.bankingapp.DTO.request.AddressRequestDTO;
 import com.bankapp.bankingapp.DTO.request.BranchRequestDTO;
 import com.bankapp.bankingapp.DTO.response.BranchResponseDTO;
 import com.bankapp.bankingapp.service.BranchService;
@@ -7,6 +8,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -39,6 +42,12 @@ public class BranchController {
     @DeleteMapping("/{id}")
     private ResponseEntity deleteById(@Valid @PathVariable Integer id){
         branchService.delete(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}/address")
+    private ResponseEntity modify(@Valid @PathVariable Integer id, @Valid @RequestBody Map<String, Object> fieldsToModify) {
+        branchService.modify(id, fieldsToModify);
         return new ResponseEntity(HttpStatus.OK);
     }
 

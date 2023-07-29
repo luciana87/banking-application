@@ -3,11 +3,13 @@ package com.bankapp.bankingapp.DTO.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class BranchRequestDTO {
 
     @JsonProperty("branch_code")
     @NotEmpty
+    @Size(min = 4, max = 4)
     private String branchCode;
     @JsonProperty("address")
     @NotNull

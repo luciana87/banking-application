@@ -72,7 +72,7 @@ public class AddressService {
         addressRepository.save(addressToReplace);
     }
 
-    private Optional<Address> findById(Integer id) {
+    public Optional<Address> findById(Integer id) {
         return addressRepository.findById(id);
     }
 

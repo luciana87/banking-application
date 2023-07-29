@@ -51,7 +51,7 @@ public class BranchService {
     }
     public List<BranchResponseDTO> retrieveAll() {
         List<Branch> branchList = branchRepository.findAll();
-        return branchList.stream().map(branch -> mapToDTO(branch)).collect(Collectors.toList());
+        return branchList.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
     public BranchResponseDTO retrieveById(Integer id) {
         Optional<Branch> branch = findById(id);
@@ -63,6 +63,17 @@ public class BranchService {
 
     public void delete(Integer id) {
         branchRepository.deleteById(id);
+    }
+    public void modify(Integer id, Map<String, Object> fieldsToModify) {
+        Optional<Branch> optionalBranch = findById(id);
+
+        if (optionalBranch.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+
+        Branch branchToModify = optionalBranch.get();
+        addressService.modify(branchToModify.getAddress().getId(), fieldsToModify);
+
     }
 
     private Optional<Branch> findById(Integer id) {
