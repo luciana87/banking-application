@@ -2,11 +2,13 @@ package com.bankapp.bankingapp.DTO.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 public class BankRequestDTO {
 
     @JsonProperty("bank_code")
     @NotEmpty
+    @Size(min = 3, max = 3)
     private String bankCode;
     @NotEmpty
     private String name;
