@@ -3,19 +3,26 @@ package com.bankapp.bankingapp.DTO.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 
-public class BankRequestDTO {
-
+public class BankRequestReplaceDTO {
     @JsonProperty("bank_code")
     @NotEmpty
     private String bankCode;
     @NotEmpty
     private String name;
 
-    public BankRequestDTO() {
+    public BankRequestReplaceDTO() {
     }
 
-    public BankRequestDTO(String bankCode, String name) {
+    public BankRequestReplaceDTO (String bankCode, String name) {
         this.bankCode = bankCode;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -25,13 +32,5 @@ public class BankRequestDTO {
 
     public void setBankCode(String bankCode) {
         this.bankCode = bankCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
