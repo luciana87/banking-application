@@ -1,5 +1,6 @@
 package com.bankapp.bankingapp.entity;
 
+import com.bankapp.bankingapp.exceptions.ResourceNotFoundException;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -7,9 +8,11 @@ import java.util.List;
 @Entity
 public class Branch{
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    protected Integer id;
     @Column(name = "code")
     private String branchCode;
-    @OneToOne //Una sucursal tiene una dirección
+    @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) //Una sucursal tiene una dirección
     @JoinColumn (name = "address_id") //Foreign Key: address_id
     private Address address;
     @ManyToOne
@@ -17,22 +20,32 @@ public class Branch{
     private Bank bank;
 
     @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
-    protected List<CurrentAccount> currentAccountList;
+    protected List<Account> accountList;
 
-    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
-    protected List<SavingsAccount> savingsAccountList;
 
     public Branch() {
     }
 
-    public Branch(Address address, List<CurrentAccount> currentAccountList, List<SavingsAccount> savingsAccountList) {
+    public Branch(String branchCode, Address address, List<Account> accountList) {
+        this.branchCode = branchCode;
         this.address = address;
-        this.currentAccountList = currentAccountList;
-        this.savingsAccountList = savingsAccountList;
+        this.accountList = accountList;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getBranchCode() {
         return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
     }
 
     public Address getAddress() {
@@ -43,4 +56,19 @@ public class Branch{
         this.address = address;
     }
 
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
+    }
 }

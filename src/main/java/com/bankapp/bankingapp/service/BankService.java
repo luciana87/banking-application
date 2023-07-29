@@ -7,7 +7,7 @@ import com.bankapp.bankingapp.entity.Bank;
 import com.bankapp.bankingapp.exceptions.ExistingResourceException;
 import com.bankapp.bankingapp.exceptions.ResourceNotFoundException;
 import com.bankapp.bankingapp.repository.BankRepository;
-import org.modelmapper.ModelMapper;
+import com.bankapp.bankingapp.utils.Util;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class BankService {
-    ModelMapper modelMapper = new ModelMapper();
     private final BankRepository bankRepository;
 
     public BankService(BankRepository bankRepository) {
@@ -34,12 +33,12 @@ public class BankService {
         return bankRequestDTO;
     }
 
-    public Object retrieveAll() {
+    public List<BankResponseDTO> retrieveAll() {
         List<Bank> bankList = bankRepository.findAll();
         return bankList.stream().map(bank -> mapToDTO(bank)).collect(Collectors.toList());
     }
 
-    public BankResponseDTO retrieveById(Integer id) {
+    public BankResponseDTO retrieveById (Integer id) {
         Optional<Bank> bank = findById(id);
         if (bank.isEmpty()){
             throw new ResourceNotFoundException ("Banco no encontrado");
@@ -75,17 +74,17 @@ public class BankService {
             bankRepository.save(bankToReplace);
     }
 
-    private Optional<Bank> findById(Integer id) {
+    public Optional<Bank> findById(Integer id) {
         return bankRepository.findById(id);
     }
 
     private Bank mapToEntity (BankRequestDTO bankRequestDTO) {
-        Bank bank = modelMapper.map(bankRequestDTO, Bank.class);
+        Bank bank = Util.MODEL_MAPPER.map(bankRequestDTO, Bank.class);
         return bank;
     }
 
     private BankResponseDTO mapToDTO(Bank bank) {
-        BankResponseDTO bankDTO = modelMapper.map(bank, BankResponseDTO.class);
+        BankResponseDTO bankDTO = Util.MODEL_MAPPER.map(bank, BankResponseDTO.class);
         return bankDTO;
     }
 

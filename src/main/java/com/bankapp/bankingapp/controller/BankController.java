@@ -32,25 +32,25 @@ public class BankController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity retrieveById (@PathVariable Integer id) {
+    public ResponseEntity retrieveById (@Valid @PathVariable Integer id) {
         BankResponseDTO bankDTO = bankService.retrieveById(id);
         return new ResponseEntity(bankDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity deleteById(@PathVariable Integer id){
+    private ResponseEntity deleteById(@Valid @PathVariable Integer id){
         bankService.delete(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity replace(@PathVariable Integer id, @RequestBody BankRequestReplaceDTO bankRequestReplaceDTO){
+    private ResponseEntity replace(@Valid @PathVariable Integer id, @Valid @RequestBody BankRequestReplaceDTO bankRequestReplaceDTO){
         bankService.replace(id, bankRequestReplaceDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    private ResponseEntity modify(@PathVariable Integer id, @RequestBody Map<String, Object> fieldsToModify) {
+    private ResponseEntity modify(@Valid @PathVariable Integer id, @Valid @RequestBody Map<String, Object> fieldsToModify) {
         bankService.modify(id, fieldsToModify);
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -10,19 +10,19 @@ import java.util.List;
 public class Customer extends Person {
     private int customerNumber;
     @OneToMany(mappedBy = "accountHolder", fetch = FetchType.LAZY)
-    private List<Account> accounts;
+    private List<Account> accountList;
 
     public Customer(){
 
     }
 
-    public Customer(List<Account> accounts) {
-        this.accounts = accounts;
+    public Customer(List<Account> accountList) {
+        this.accountList = accountList;
     }
 
-    public Customer(String name, String lastName, String cardNumber, long phoneNumber, String email, Address address, List<Account> accounts) {
+    public Customer(String name, String lastName, String cardNumber, long phoneNumber, String email, Address address, List<Account> accountList) {
         super(name, lastName, cardNumber, phoneNumber, email, address);
-        this.accounts = accounts;
+        this.accountList = accountList;
     }
 
     public int getCustomerNumber() {
@@ -33,11 +33,11 @@ public class Customer extends Person {
         this.customerNumber = customerNumber;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
+    public List<Account> getAccountList() {
+        return accountList;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
     }
 }

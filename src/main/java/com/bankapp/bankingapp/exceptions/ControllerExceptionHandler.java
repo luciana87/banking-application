@@ -28,4 +28,11 @@ public class ControllerExceptionHandler {
     public ResponseEntity handleException(MethodArgumentNotValidException e) {
         return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    // Valida que no lleguen recursos vacíos
+    @ExceptionHandler (EmptyResourceException.class)
+    public ResponseEntity handleException(EmptyResourceException e) {
+        return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 }

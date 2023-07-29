@@ -2,8 +2,6 @@ package com.bankapp.bankingapp.entity;
 
 import com.bankapp.bankingapp.exceptions.ResourceNotFoundException;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
