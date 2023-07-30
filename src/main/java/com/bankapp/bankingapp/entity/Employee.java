@@ -1,6 +1,5 @@
 package com.bankapp.bankingapp.entity;
 
-import com.bankapp.bankingapp.exceptions.ResourceNotFoundException;
 import jakarta.persistence.*;
 
 import java.util.List;
