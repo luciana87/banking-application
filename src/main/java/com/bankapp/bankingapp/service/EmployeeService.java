@@ -4,7 +4,6 @@ import com.bankapp.bankingapp.DTO.request.EmployeeRequestDTO;
 import com.bankapp.bankingapp.DTO.response.AddressResponseDTO;
 import com.bankapp.bankingapp.DTO.response.EmployeeResponseDTO;
 import com.bankapp.bankingapp.entity.Address;
-import com.bankapp.bankingapp.entity.Bank;
 import com.bankapp.bankingapp.entity.Branch;
 import com.bankapp.bankingapp.entity.Employee;
 import com.bankapp.bankingapp.exceptions.ExistingResourceException;
@@ -35,7 +34,7 @@ public class EmployeeService {
 
     @Transactional
     public Integer create(EmployeeRequestDTO employeeRequestDTO) {
-        checkForExistingEmployee(employeeRequestDTO.getCardNumber());
+        checkForExistingEmployee(employeeRequestDTO.getEmployeeNumber());
 
         Address address = addressService.create(employeeRequestDTO.getAddressRequestDTO());
 
@@ -120,8 +119,8 @@ public class EmployeeService {
         employeeDTO.setAddressReponseDTO(addressResponseDTO);
         return employeeDTO;
     }
-    private void checkForExistingEmployee(String cardNumber) {
-        if (employeeRepository.existsByCardNumber(cardNumber)) {
+    private void checkForExistingEmployee(int employeeNumber) {
+        if (employeeRepository.existsByEmployeeNumber(employeeNumber)) {
             throw new ExistingResourceException();
         }
     }

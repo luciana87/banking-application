@@ -1,15 +1,17 @@
 package com.bankapp.bankingapp.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Customer extends Person {
     private int customerNumber;
-    @OneToMany(mappedBy = "accountHolder", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "accountHolder", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Account> accountList;
 
     public Customer(){
@@ -22,7 +24,7 @@ public class Customer extends Person {
 
     public Customer(String name, String lastName, String cardNumber, long phoneNumber, String email, Address address, List<Account> accountList) {
         super(name, lastName, cardNumber, phoneNumber, email, address);
-        this.accountList = accountList;
+        this.accountList = new ArrayList<Account>();
     }
 
     public int getCustomerNumber() {
@@ -39,5 +41,28 @@ public class Customer extends Person {
 
     public void setAccountList(List<Account> accountList) {
         this.accountList = accountList;
+    }
+
+    public void modifyAttributeValue(String attributeName, Object newValue) {
+        switch (attributeName) {
+            case "name":
+                this.name = (String) newValue;
+                break;
+            case "last_name":
+                this.lastName = (String) newValue;
+                break;
+            case "card_number":
+                this.cardNumber = (String) newValue;
+                break;
+            case "phone_number":
+                this.phoneNumber = ((Integer) newValue).longValue();
+                break;
+            case "email":
+                this.email = (String) newValue;
+                break;
+            case "customer_number":
+                this.customerNumber = (int) newValue;
+                break;
+        }
     }
 }
