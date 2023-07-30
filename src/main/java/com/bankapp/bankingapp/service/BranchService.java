@@ -6,13 +6,12 @@ import com.bankapp.bankingapp.DTO.response.BranchResponseDTO;
 import com.bankapp.bankingapp.entity.Address;
 import com.bankapp.bankingapp.entity.Bank;
 import com.bankapp.bankingapp.entity.Branch;
-import com.bankapp.bankingapp.exceptions.EmptyResourceException;
 import com.bankapp.bankingapp.exceptions.ExistingResourceException;
 import com.bankapp.bankingapp.exceptions.ResourceNotFoundException;
 import com.bankapp.bankingapp.repository.BranchRepository;
 import com.bankapp.bankingapp.utils.Util;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class BranchService {
         this.addressService = addressService;
         this.bankService = bankService;
     }
-
+    @Transactional
     public Integer create(BranchRequestDTO branchRequestDTO) {
         checkForExistingBranch(branchRequestDTO.getBranchCode());
 
@@ -64,6 +63,7 @@ public class BranchService {
     public void delete(Integer id) {
         branchRepository.deleteById(id);
     }
+    @Transactional
     public void modify(Integer id, Map<String, Object> fieldsToModify) {
         Optional<Branch> optionalBranch = findById(id);
 
@@ -76,7 +76,7 @@ public class BranchService {
 
     }
 
-    private Optional<Branch> findById(Integer id) {
+    public Optional<Branch> findById(Integer id) {
         return branchRepository.findById(id);
     }
 

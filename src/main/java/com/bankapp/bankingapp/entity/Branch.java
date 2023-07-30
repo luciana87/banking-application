@@ -22,14 +22,19 @@ public class Branch{
     @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
     protected List<Account> accountList;
 
+    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
+    protected List<Employee> employeeList;
+
 
     public Branch() {
     }
 
-    public Branch(String branchCode, Address address, List<Account> accountList) {
+    public Branch(String branchCode, Address address, Bank bank, List<Account> accountList, List<Employee> employeeList) {
         this.branchCode = branchCode;
         this.address = address;
+        this.bank = bank;
         this.accountList = accountList;
+        this.employeeList = employeeList;
     }
 
     public Integer getId() {
@@ -70,5 +75,13 @@ public class Branch{
 
     public void setAccountList(List<Account> accountList) {
         this.accountList = accountList;
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 }

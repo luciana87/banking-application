@@ -9,6 +9,7 @@ import com.bankapp.bankingapp.exceptions.ResourceNotFoundException;
 import com.bankapp.bankingapp.repository.BankRepository;
 import com.bankapp.bankingapp.utils.Util;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class BankService {
     public BankService(BankRepository bankRepository) {
         this.bankRepository = bankRepository;
     }
-
+    @Transactional
     public BankRequestDTO create(BankRequestDTO bankRequestDTO) {
 
         checkForExistingBank(bankRequestDTO.getBankCode());
@@ -49,7 +50,7 @@ public class BankService {
     public void delete(Integer id) {
         bankRepository.deleteById(id);
     }
-
+    @Transactional
     public void modify(Integer id, Map<String,Object> fieldsToModify) {
         Optional<Bank> bank = findById(id);
 
@@ -61,7 +62,7 @@ public class BankService {
         fieldsToModify.forEach((key,value)-> bankToModify.modifyAttributeValue(key,value));
         bankRepository.save(bankToModify);
     }
-
+    @Transactional
     public void replace(Integer id, BankRequestReplaceDTO bankRequestReplaceDTO) {
             Optional<Bank> bankOptional = bankRepository.findById(id);
             if (bankOptional.isEmpty()){
