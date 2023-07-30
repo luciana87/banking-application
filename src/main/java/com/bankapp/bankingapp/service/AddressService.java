@@ -9,6 +9,7 @@ import com.bankapp.bankingapp.repository.AddressRepository;
 import com.bankapp.bankingapp.utils.Util;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Optional;
@@ -21,7 +22,7 @@ public class AddressService {
     public AddressService (AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
-
+    @Transactional
     public Address create (AddressRequestDTO addressRequestDTO) {
         validateAddress(addressRequestDTO);
 
@@ -42,7 +43,7 @@ public class AddressService {
         AddressResponseDTO addressDTO = Util.MODEL_MAPPER.map(address, AddressResponseDTO.class);
         return addressDTO;
     }
-
+    @Transactional
     public void modify (Integer id, Map<String, Object> fieldsToModify) {
         Optional<Address> address = findById(id);
 
@@ -54,6 +55,7 @@ public class AddressService {
         fieldsToModify.forEach((key,value)-> addressToModify.modifyAttributeValue(key,value));
         addressRepository.save(addressToModify);
     }
+    @Transactional
     public void replace (Integer id, AddressRequestDTO addressRequestDTO) {
         Optional<Address> addressOptional = addressRepository.findById(id);
 
