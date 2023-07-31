@@ -91,5 +91,7 @@ public abstract class Account {
         this.active = active;
     }
 
+    public abstract String getType();
+
 
 }

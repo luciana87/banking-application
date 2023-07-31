@@ -65,6 +65,7 @@ public class EmployeeService {
         }
         return mapToDTO(employeeOptional.get());
     }
+
     public void delete(Integer id) {
         employeeRepository.deleteById(id);
     }
@@ -78,6 +79,7 @@ public class EmployeeService {
         List<Employee> employeeList = employeeRepository.retrieveEmployeeByBranch(optionalBranch.get());
         return employeeList.stream().map(employee -> mapToDTO(employee)).collect(Collectors.toList());
     }
+
     @Transactional
     public void modify(Integer id, Map<String, Object> fieldsToModify) {
 
@@ -113,13 +115,13 @@ public class EmployeeService {
         return employee;
     }
 
-
     private EmployeeResponseDTO mapToDTO(Employee employee) {
         EmployeeResponseDTO employeeDTO = Util.MODEL_MAPPER.map(employee, EmployeeResponseDTO.class);
         AddressResponseDTO addressResponseDTO = addressService.mapToDTO(employee.getAddress());
         employeeDTO.setAddressReponseDTO(addressResponseDTO);
         return employeeDTO;
     }
+
     private void checkForExistingEmployee(int employeeNumber) {
         if (employeeRepository.existsByEmployeeNumber(employeeNumber)) {
             throw new ExistingResourceException();

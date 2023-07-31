@@ -1,6 +1,8 @@
 package com.bankapp.bankingapp.service;
 
 import com.bankapp.bankingapp.DTO.request.AccountRequestDTO;
+import com.bankapp.bankingapp.DTO.response.AccountResponseDTO;
+import com.bankapp.bankingapp.DTO.response.CustomerResponseDTO;
 import com.bankapp.bankingapp.entity.*;
 import com.bankapp.bankingapp.exceptions.ExistingResourceException;
 import com.bankapp.bankingapp.exceptions.ResourceNotFoundException;
@@ -8,7 +10,9 @@ import com.bankapp.bankingapp.repository.AccountRepository;
 import com.bankapp.bankingapp.utils.Util;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
@@ -23,6 +27,7 @@ public class AccountService {
         this.branchService = branchService;
         this.employeeService = employeeService;
     }
+
     public Account getAttributes(AccountRequestDTO accountRequestDTO, Account account) {
         Customer customer = customerService.getOrCreate(accountRequestDTO.getCustomerRequestDTO());
 
@@ -68,13 +73,35 @@ public class AccountService {
 
         return savingsAccount.getAccountNumber();
     }
+
+    public List<AccountResponseDTO> retrieveAccountsByCustomer(Integer id) {
+        Optional<Customer> customerOptional = customerService.findById(id);
+        if (customerOptional.isEmpty()){
+            throw new ResourceNotFoundException("Cliente no encontrado");
+        }
+
+        List<Account> accountList = accountRepository.retrieveAccountsByCustomer(customerOptional.get());
+        return accountList.stream().map(account -> mapToDTO(account)).collect(Collectors.toList());
+    }
+
+    private AccountResponseDTO mapToDTO(Account account) {
+        AccountResponseDTO accountDTO = Util.MODEL_MAPPER.map(account, AccountResponseDTO.class);
+        CustomerResponseDTO customerResponseDTO = customerService.mapToDTO(account.getAccountHolder());
+        accountDTO.setCustomerResponseDTO(customerResponseDTO);
+        accountDTO.setType(account.getType());
+        return accountDTO;
+    }
+
     private CurrentAccount mapToEntityCurrentAccount(AccountRequestDTO accountRequestDTO) {
         CurrentAccount currentAccount = Util.MODEL_MAPPER.map(accountRequestDTO, CurrentAccount.class);
         return currentAccount;
     }
+
     private SavingsAccount mapToEntitySavingsAccount(AccountRequestDTO accountRequestDTO) {
         SavingsAccount savingsAccount = Util.MODEL_MAPPER.map(accountRequestDTO, SavingsAccount.class);
         return savingsAccount;
     }
+
+
 
 }
