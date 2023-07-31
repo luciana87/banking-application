@@ -3,6 +3,8 @@ package com.bankapp.bankingapp.DTO.request;
 import com.bankapp.bankingapp.entity.Address;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,6 +22,7 @@ public class EmployeeRequestDTO {
     @NotNull
     protected long phoneNumber;
     @NotEmpty
+//    @Email (message = "Email should be valid")
     protected String email;
     @JsonProperty("address")
     @NotNull

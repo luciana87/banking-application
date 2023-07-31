@@ -1,6 +1,8 @@
 package com.bankapp.bankingapp.DTO.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,6 +20,7 @@ public class CustomerRequestDTO {
     @NotNull
     protected long phoneNumber;
     @NotEmpty
+//    @Email
     protected String email;
     @JsonProperty("address")
     @NotNull
@@ -28,7 +31,7 @@ public class CustomerRequestDTO {
 
     public CustomerRequestDTO(){ }
     public CustomerRequestDTO(String name, String lastName, String cardNumber, long phoneNumber,
-                              String email, AddressRequestDTO addressRequestDTO, int customerNumber) {
+                               String email, AddressRequestDTO addressRequestDTO, int customerNumber) {
         this.name = name;
         this.lastName = lastName;
         this.cardNumber = cardNumber;

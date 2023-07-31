@@ -3,7 +3,9 @@ package com.bankapp.bankingapp.repository;
 import com.bankapp.bankingapp.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CustomerRepository extends JpaRepository<Customer,Integer> {
-    boolean existsByCustomerNumber(int customerNumber);
+import java.util.Optional;
 
+public interface CustomerRepository extends JpaRepository<Customer,Integer> {
+    Optional<Customer> findByCardNumber(String cardNumber);
+    Optional<Customer> findByCustomerNumber (int customerNumber);
 }

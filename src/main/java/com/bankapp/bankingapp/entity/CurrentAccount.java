@@ -16,8 +16,8 @@ public class CurrentAccount extends Account{
         this.overdraft = overdraft;
     }
 
-    public CurrentAccount(double balance, String alias, Branch branch, Customer customer, double overdraft) {
-        super(balance, alias, branch, customer);
+    public CurrentAccount(String alias, Branch branch, Customer accountHolder, double overdraft) {
+        super(alias, branch, accountHolder);
         this.overdraft = overdraft;
     }
 
@@ -28,4 +28,5 @@ public class CurrentAccount extends Account{
     public void setOverdraft(double overdraft) {
         this.overdraft = overdraft;
     }
+
 }

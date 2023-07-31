@@ -6,9 +6,13 @@ import jakarta.persistence.*;
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Account {
     @Id
+    @Column (unique = true)
     protected String accountNumber;
+    protected boolean active;
     protected double balance;
+    @Column (unique = true)
     protected String alias;
+
     @ManyToOne
     @JoinColumn (name= "branch_id")
     protected Branch branch;
@@ -23,8 +27,9 @@ public abstract class Account {
     public Account() {
     }
 
-    public Account(double balance, String alias, Branch branch, Customer accountHolder) {
-        this.balance = balance;
+    public Account(String alias, Branch branch, Customer accountHolder) {
+        this.active = true;
+        this.balance = 0.00d;
         this.alias = alias;
         this.branch = branch;
         this.accountHolder = accountHolder;
@@ -65,4 +70,26 @@ public abstract class Account {
     public void setAccountHolder(Customer accountHolder) {
         this.accountHolder = accountHolder;
     }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+
 }
