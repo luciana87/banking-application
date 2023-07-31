@@ -6,6 +6,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
@@ -13,7 +15,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler (ExistingResourceException.class)
     public ResponseEntity handleException(ExistingResourceException e) {
 
-        return new ResponseEntity(ExistingResourceException.MESSAGE, HttpStatus.CONFLICT);
+        return new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
     }
 
     //Excepción para recursos no encontrados
@@ -32,6 +34,12 @@ public class ControllerExceptionHandler {
     // Valida que no lleguen recursos vacíos
     @ExceptionHandler (EmptyResourceException.class)
     public ResponseEntity handleException(EmptyResourceException e) {
+        return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    //Excepción lanzada por las validaciones con spring para campos duplicados
+    @ExceptionHandler (SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity handleException(SQLIntegrityConstraintViolationException e) {
         return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

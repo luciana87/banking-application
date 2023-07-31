@@ -1,6 +1,7 @@
 package com.bankapp.bankingapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 @MappedSuperclass
 public abstract class Person {
@@ -12,6 +13,8 @@ public abstract class Person {
     protected String lastName;
     protected String cardNumber;
     protected long phoneNumber;
+
+    @Email(message = "Email should be valid")
     protected String email;
 
     @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) //Una persona tiene una dirección

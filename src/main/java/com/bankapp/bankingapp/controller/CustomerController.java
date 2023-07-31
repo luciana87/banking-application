@@ -19,11 +19,11 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping
-    public ResponseEntity create(@Valid @RequestBody CustomerRequestDTO customerRequestDTO){
-        Integer customerId = customerService.create(customerRequestDTO);
-        return new ResponseEntity(customerId, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity create(@Valid @RequestBody CustomerRequestDTO customerRequestDTO){
+//        Integer customerId = customerService.create(customerRequestDTO);
+//        return new ResponseEntity(customerId, HttpStatus.CREATED);
+//    }
 
     @GetMapping
     public ResponseEntity retrieveAll(){

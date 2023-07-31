@@ -28,16 +28,32 @@ public class CustomerService {
     }
 
     @Transactional
-    public Integer create(CustomerRequestDTO customerRequestDTO) {
-        checkForExistingCustomer(customerRequestDTO.getCustomerNumber());
+    public Customer create(CustomerRequestDTO customerRequestDTO) {
+        Optional<Customer> customerOptional = findByCustomerNumber(customerRequestDTO.getCustomerNumber());
+        if (customerOptional.isEmpty()){
+            Address address = addressService.create(customerRequestDTO.getAddressRequestDTO());
 
-        Address address = addressService.create(customerRequestDTO.getAddressRequestDTO());
+            Customer customer = mapToEntity(customerRequestDTO);
+            customer.setAddress(address);
+            customer = customerRepository.save(customer);
 
-        Customer customer = mapToEntity(customerRequestDTO);
-        customer.setAddress(address);
-        customer = customerRepository.save(customer);
+            return customer;
+        } else {
+            throw new ExistingResourceException("El número de cliente debe ser único. Seleccione uno diferente.");
+        }
+    }
 
-        return customer.getId();
+    public Customer getOrCreate(CustomerRequestDTO customerRequestDTO) {
+
+        Optional<Customer> customerOptional = customerRepository.findByCardNumber(customerRequestDTO.getCardNumber());
+        Customer customer = null;
+
+        if (customerOptional.isEmpty()){
+            customer = create(customerRequestDTO);
+        } else {
+            customer = customerOptional.get();
+        }
+        return customer;
     }
 
     public List<CustomerResponseDTO> retrieveAll() {
@@ -67,6 +83,9 @@ public class CustomerService {
 
         customerRepository.save(customerToModify);
     }
+    public Optional<Customer> findByCustomerNumber(int customerNumber) {
+        return customerRepository.findByCustomerNumber(customerNumber);
+    }
 
     private Optional<Customer> findById(Integer id) {
         return customerRepository.findById(id);
@@ -77,11 +96,6 @@ public class CustomerService {
         return customer;
     }
 
-    private void checkForExistingCustomer(int customerNumber) {
-        if (customerRepository.existsByCustomerNumber(customerNumber)) {
-            throw new ExistingResourceException();
-        }
-    }
     private CustomerResponseDTO mapToDTO(Customer customer) {
         CustomerResponseDTO customerDTO = Util.MODEL_MAPPER.map(customer, CustomerResponseDTO.class);
         AddressResponseDTO addressResponseDTO = addressService.mapToDTO(customer.getAddress());

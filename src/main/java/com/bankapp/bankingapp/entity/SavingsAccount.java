@@ -10,8 +10,7 @@ public class SavingsAccount extends Account{
     public SavingsAccount() {
     }
 
-    public SavingsAccount(double balance, String alias, Branch branch, Customer customer) {
-        super(balance, alias, branch, customer);
+    public SavingsAccount(String alias, Branch branch, Customer accountHolder) {
+        super(alias, branch, accountHolder);
     }
-
 }

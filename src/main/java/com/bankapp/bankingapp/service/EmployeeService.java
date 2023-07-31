@@ -40,7 +40,7 @@ public class EmployeeService {
 
         Optional<Branch> branchOptional = branchService.findById(employeeRequestDTO.getBranch());
         if (branchOptional.isEmpty()){
-            throw new ResourceNotFoundException("La sucursal no puede estar vacío.");
+            throw new ResourceNotFoundException();
         }
         Branch branch = branchOptional.get();
 
@@ -104,14 +104,15 @@ public class EmployeeService {
         employeeRepository.save(employeeToModify);
     }
 
+    public Optional<Employee> findById(Integer id) {
+        return employeeRepository.findById(id);
+    }
+
     private Employee mapToEntity(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = Util.MODEL_MAPPER.map(employeeRequestDTO, Employee.class);
         return employee;
     }
 
-    private Optional<Employee> findById(Integer id) {
-        return employeeRepository.findById(id);
-    }
 
     private EmployeeResponseDTO mapToDTO(Employee employee) {
         EmployeeResponseDTO employeeDTO = Util.MODEL_MAPPER.map(employee, EmployeeResponseDTO.class);
