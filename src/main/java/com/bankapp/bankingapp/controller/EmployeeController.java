@@ -1,6 +1,5 @@
 package com.bankapp.bankingapp.controller;
 
-import com.bankapp.bankingapp.DTO.request.BankRequestDTO;
 import com.bankapp.bankingapp.DTO.request.EmployeeRequestDTO;
 import com.bankapp.bankingapp.DTO.response.EmployeeResponseDTO;
 import com.bankapp.bankingapp.service.EmployeeService;

@@ -1,5 +1,6 @@
 package com.bankapp.bankingapp.service;
 
+import com.bankapp.bankingapp.DTO.request.AccountRequestDTO;
 import com.bankapp.bankingapp.DTO.request.CustomerRequestDTO;
 import com.bankapp.bankingapp.DTO.response.AddressResponseDTO;
 import com.bankapp.bankingapp.DTO.response.CustomerResponseDTO;
@@ -87,20 +88,19 @@ public class CustomerService {
         return customerRepository.findByCustomerNumber(customerNumber);
     }
 
-    private Optional<Customer> findById(Integer id) {
+    public Optional<Customer> findById(Integer id) {
         return customerRepository.findById(id);
+    }
+    public CustomerResponseDTO mapToDTO(Customer customer) {
+        CustomerResponseDTO customerDTO = Util.MODEL_MAPPER.map(customer, CustomerResponseDTO.class);
+        AddressResponseDTO addressResponseDTO = addressService.mapToDTO(customer.getAddress());
+        customerDTO.setAddressReponseDTO(addressResponseDTO);
+        return customerDTO;
     }
 
     private Customer mapToEntity(CustomerRequestDTO customerRequestDTO) {
         Customer customer = Util.MODEL_MAPPER.map(customerRequestDTO, Customer.class);
         return customer;
-    }
-
-    private CustomerResponseDTO mapToDTO(Customer customer) {
-        CustomerResponseDTO customerDTO = Util.MODEL_MAPPER.map(customer, CustomerResponseDTO.class);
-        AddressResponseDTO addressResponseDTO = addressService.mapToDTO(customer.getAddress());
-        customerDTO.setAddressReponseDTO(addressResponseDTO);
-        return customerDTO;
     }
 
 

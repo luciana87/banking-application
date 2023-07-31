@@ -12,6 +12,11 @@ public class CurrentAccount extends Account{
     public CurrentAccount() {
     }
 
+    @Override
+    public String getType() {
+        return "Current account";
+    }
+
     public CurrentAccount(double overdraft) {
         this.overdraft = overdraft;
     }
@@ -28,5 +33,7 @@ public class CurrentAccount extends Account{
     public void setOverdraft(double overdraft) {
         this.overdraft = overdraft;
     }
+
+
 
 }

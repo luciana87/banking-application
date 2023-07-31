@@ -13,4 +13,10 @@ public class SavingsAccount extends Account{
     public SavingsAccount(String alias, Branch branch, Customer accountHolder) {
         super(alias, branch, accountHolder);
     }
+
+
+    @Override
+    public String getType() {
+        return "Savings account";
+    }
 }
