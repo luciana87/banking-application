@@ -5,9 +5,9 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class BankRequestReplaceDTO {
     @JsonProperty("bank_code")
-    @NotEmpty
+    @NotEmpty (message = "Bank code may not be null or empty")
     private String bankCode;
-    @NotEmpty
+    @NotEmpty (message = "Name may not be null or empty")
     private String name;
 
     public BankRequestReplaceDTO() {

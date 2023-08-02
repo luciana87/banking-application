@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 
 public class AddressRequestDTO {
-    @NotEmpty
+    @NotEmpty (message = "Street may not be null or empty")
     private String street;
-    @NotEmpty
+    @NotEmpty (message = "City may not be null or empty")
     private String city;
-    @NotEmpty
+    @NotEmpty (message = "State may not be null or empty")
     private String state;
     @JsonProperty("postal_code")
-    @NotEmpty
+    @NotEmpty (message = "Postal code may not be null or empty")
     private String postalCode;
-    @NotEmpty
+    @NotEmpty (message = "Country may not be null or empty")
     private String country;
 
     public AddressRequestDTO(String street, String city, String state, String postalCode, String country) {

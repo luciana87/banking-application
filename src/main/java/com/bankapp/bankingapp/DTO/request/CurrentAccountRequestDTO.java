@@ -3,7 +3,7 @@ package com.bankapp.bankingapp.DTO.request;
 import jakarta.validation.constraints.NotNull;
 
 public class CurrentAccountRequestDTO extends AccountRequestDTO{
-    @NotNull
+    @NotNull (message = "Overdraft may not be null or empty")
     private double overdraft;
 
     public CurrentAccountRequestDTO (){

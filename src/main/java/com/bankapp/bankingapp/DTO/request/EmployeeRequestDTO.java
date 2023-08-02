@@ -7,28 +7,28 @@ import jakarta.validation.constraints.NotNull;
 
 public class EmployeeRequestDTO {
 
-    @NotEmpty
+    @NotEmpty (message = "Name may not be null or empty")
     protected String name;
     @JsonProperty("last_name")
-    @NotEmpty
+    @NotEmpty (message = "Last name may not be null or empty")
     protected String lastName;
     @JsonProperty("card_number")
-    @NotEmpty
+    @NotEmpty (message = "Card number may not be null or empty")
     protected String cardNumber;
     @JsonProperty("phone_number")
-    @NotNull
+    @NotNull (message = "Phone number may not be null or empty")
     protected long phoneNumber;
-    @NotEmpty
+    @NotEmpty (message = "Email may not be null or empty")
     @Email (message = "Email should be valid")
     protected String email;
     @JsonProperty("address")
-    @NotNull
+    @NotNull (message = "Address may not be null or empty")
     protected AddressRequestDTO addressRequestDTO;
     @JsonProperty("branch_id")
-    @NotNull
+    @NotNull (message = "Branch id may not be null or empty")
     private Integer branch;
     @JsonProperty("employee_number")
-    @NotNull
+    @NotNull (message = "Employee number may not be null or empty")
     private int employeeNumber;
 
     public EmployeeRequestDTO(){

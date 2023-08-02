@@ -3,11 +3,11 @@ package com.bankapp.bankingapp.DTO.request;
 import jakarta.validation.constraints.NotNull;
 
 public class AmountDTO {
-    @NotNull
-    private double amount;
+    @NotNull (message = "Amount may not be null or empty")
+    private Double amount;
     public AmountDTO() {}
 
-    public AmountDTO(double amount) {
+    public AmountDTO(Double amount) {
         this.amount = amount;
     }
 
@@ -15,7 +15,7 @@ public class AmountDTO {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 }

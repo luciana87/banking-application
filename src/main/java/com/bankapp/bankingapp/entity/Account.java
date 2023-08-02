@@ -109,7 +109,7 @@ public abstract class Account {
         if (checkAvailableBalance(amount)) {
             descontarMonto(amount);
         } else {
-            throw new InsufficientBalanceException();
+            throw new InsufficientBalanceException();gi
         }
     }
 
