@@ -5,11 +5,11 @@ import jakarta.validation.constraints.NotNull;
 
 public class TransferRequestDTO {
     @NotNull
-    private double amount;
+    private Double amount;
     @NotEmpty
     private String cbu;
 
-    public TransferRequestDTO(double amount, String cbu) {
+    public TransferRequestDTO(Double amount, String cbu) {
         this.amount = amount;
         this.cbu = cbu;
     }
@@ -17,11 +17,11 @@ public class TransferRequestDTO {
     }
 
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

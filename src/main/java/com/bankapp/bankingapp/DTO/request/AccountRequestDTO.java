@@ -7,20 +7,20 @@ import jakarta.validation.constraints.Size;
 
 public class AccountRequestDTO {
     @JsonProperty("account_number")
-    @NotEmpty
+    @NotEmpty (message = "Account number may not be empty")
     @Size(min = 10, max = 10)
     protected String accountNumber;
-    @NotEmpty
+    @NotEmpty (message = "Alias may not be empty")
     protected String alias;
     @JsonProperty("branch_id")
-    @NotNull
+    @NotNull (message = "Branch id may not be null or empty")
     protected Integer branchId;
 
     @JsonProperty("account_holder")
-    @NotNull
+    @NotNull (message = "Customer may not be null or empty")
     protected CustomerRequestDTO customerRequestDTO;
     @JsonProperty("employee_id")
-    @NotNull
+    @NotNull (message = "Employee id may not be null or empty")
     protected Integer employeeId;
 
     public AccountRequestDTO () {

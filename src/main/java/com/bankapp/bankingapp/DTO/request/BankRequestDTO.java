@@ -7,10 +7,11 @@ import jakarta.validation.constraints.Size;
 public class BankRequestDTO {
 
     @JsonProperty("bank_code")
-    @NotEmpty
-    @Size(min = 3, max = 3)
+    @NotEmpty (message = "Bank code may not be empty")
+    @Size(min = 3, max = 3, message = "The bank code must contain only 3 characters")
     private String bankCode;
-    @NotEmpty
+    @NotEmpty (message = "Name may not be empty")
+    @Size (max = 40, message = "Name must be less than 32 characters long")
     private String name;
 
     public BankRequestDTO() {
