@@ -9,9 +9,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface AccountRepository extends JpaRepository<Account, Integer> {
+public interface AccountRepository extends JpaRepository<Account, String> {
     Optional<Account> findByAccountNumber(String accountNumber);
 
     @Query("SELECT a FROM Account a WHERE a.accountHolder = :accountHolder")
     public List<Account>retrieveAccountsByCustomer(@Param("accountHolder") Customer accountHolder);
+
+    Optional<Account> findByCbu(String toCBU);
+
 }

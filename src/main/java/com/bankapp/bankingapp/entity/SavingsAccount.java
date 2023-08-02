@@ -10,13 +10,17 @@ public class SavingsAccount extends Account{
     public SavingsAccount() {
     }
 
-    public SavingsAccount(String alias, Branch branch, Customer accountHolder) {
-        super(alias, branch, accountHolder);
+    public SavingsAccount(String alias, Branch branch, Customer accountHolder, String cbu) {
+        super(alias, branch, accountHolder, cbu);
     }
-
 
     @Override
     public String getType() {
         return "Savings account";
+    }
+
+    @Override
+    public boolean checkAvailableBalance(double amount) {
+        return amount <= balance;
     }
 }

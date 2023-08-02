@@ -12,17 +12,12 @@ public class CurrentAccount extends Account{
     public CurrentAccount() {
     }
 
-    @Override
-    public String getType() {
-        return "Current account";
-    }
-
-    public CurrentAccount(double overdraft) {
+    public CurrentAccount(String alias, Branch branch, Customer accountHolder, String cbu, double overdraft) {
+        super(alias, branch, accountHolder, cbu);
         this.overdraft = overdraft;
     }
 
-    public CurrentAccount(String alias, Branch branch, Customer accountHolder, double overdraft) {
-        super(alias, branch, accountHolder);
+    public CurrentAccount(double overdraft) {
         this.overdraft = overdraft;
     }
 
@@ -34,6 +29,14 @@ public class CurrentAccount extends Account{
         this.overdraft = overdraft;
     }
 
+    @Override
+    public String getType() {
+        return "Current account";
+    }
 
+    @Override
+    public boolean checkAvailableBalance(double amount) {
+        return amount <= (balance + overdraft);
+    }
 
 }

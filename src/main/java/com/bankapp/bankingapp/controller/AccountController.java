@@ -1,14 +1,15 @@
 package com.bankapp.bankingapp.controller;
 
 import com.bankapp.bankingapp.DTO.request.AccountRequestDTO;
+import com.bankapp.bankingapp.DTO.request.AmountDTO;
 import com.bankapp.bankingapp.DTO.request.CurrentAccountRequestDTO;
+import com.bankapp.bankingapp.DTO.request.TransferRequestDTO;
+import com.bankapp.bankingapp.DTO.response.AccountResponseDTO;
 import com.bankapp.bankingapp.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping (path = "/accounts")
@@ -32,12 +33,33 @@ public class AccountController {
         return new ResponseEntity(accountId, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity retrieveById (@PathVariable String id) {
+        AccountResponseDTO customerDTO = accountService.retrieveById(id);
+        return new ResponseEntity(customerDTO, HttpStatus.OK);
+    }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity retrieveById (@Valid @PathVariable Integer id) {
-//        CustomerResponseDTO customerDTO = customerService.retrieveById(id);
-//        return new ResponseEntity(customerDTO, HttpStatus.OK);
-//    }
+    @PostMapping ("/{id}/toDeposit")
+    public ResponseEntity toDeposit ( @PathVariable String id,@Valid @RequestBody AmountDTO amountDTO) { //AmountDTO solo monto
+        accountService.toDeposit(id, amountDTO);
+        return new ResponseEntity("Depósito realizado correctamente.", HttpStatus.OK);
+    }
+
+    @PostMapping ("/{id}/withdraw")
+    public ResponseEntity withdraw (@PathVariable String id, @Valid @RequestBody AmountDTO amountDTO) {
+        accountService.withdraw(id, amountDTO);
+        return new ResponseEntity("Monto extraído correctamente.", HttpStatus.OK);
+    }
+
+    @PostMapping ("/{id}/transfer")
+    public ResponseEntity transfer (@PathVariable String id, @Valid   @RequestBody TransferRequestDTO transferRequestDTO) {
+        accountService.transfer(id, transferRequestDTO);
+        return new ResponseEntity("Transferencia exitosa.",HttpStatus.OK);
+    }
+
+
+
+
 //
 //    @DeleteMapping("/{id}")
 //    private ResponseEntity deleteById(@Valid @PathVariable Integer id){
