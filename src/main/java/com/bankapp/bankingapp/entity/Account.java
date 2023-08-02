@@ -107,13 +107,13 @@ public abstract class Account {
 
     public  void withdraw(double amount) { // Extraer. Templated method
         if (checkAvailableBalance(amount)) {
-            descontarMonto(amount);
+            decreaseBalance(amount);
         } else {
-            throw new InsufficientBalanceException();gi
+            throw new InsufficientBalanceException();
         }
     }
 
-    public void descontarMonto(double amount) {
+    public void decreaseBalance(double amount) {
         this.balance -= amount;
     }
 
