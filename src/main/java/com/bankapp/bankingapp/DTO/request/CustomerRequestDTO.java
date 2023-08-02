@@ -1,37 +1,30 @@
 package com.bankapp.bankingapp.DTO.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 public class CustomerRequestDTO {
 
-    @NotEmpty
+    private Integer id;
+
     protected String name;
     @JsonProperty("last_name")
-    @NotEmpty
     protected String lastName;
     @JsonProperty("card_number")
-    @NotEmpty
     protected String cardNumber;
     @JsonProperty("phone_number")
-    @NotNull
-    protected long phoneNumber;
-    @NotEmpty
-//    @Email
+    protected Long phoneNumber;
+
+    @Email(message = "Email should be valid")
     protected String email;
     @JsonProperty("address")
-    @NotNull
     protected AddressRequestDTO addressRequestDTO;
     @JsonProperty("customer_number")
-    @NotNull
-    private int customerNumber;
+    private Integer customerNumber;
 
     public CustomerRequestDTO(){ }
-    public CustomerRequestDTO(String name, String lastName, String cardNumber, long phoneNumber,
-                               String email, AddressRequestDTO addressRequestDTO, int customerNumber) {
+    public CustomerRequestDTO(String name, String lastName, String cardNumber, Long phoneNumber,
+                               String email, AddressRequestDTO addressRequestDTO, Integer customerNumber, Integer id) {
         this.name = name;
         this.lastName = lastName;
         this.cardNumber = cardNumber;
@@ -39,6 +32,7 @@ public class CustomerRequestDTO {
         this.email = email;
         this.addressRequestDTO = addressRequestDTO;
         this.customerNumber = customerNumber;
+        this.id = id;
     }
 
     public String getName() {
@@ -65,11 +59,11 @@ public class CustomerRequestDTO {
         this.cardNumber = cardNumber;
     }
 
-    public long getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -89,11 +83,19 @@ public class CustomerRequestDTO {
         this.addressRequestDTO = addressRequestDTO;
     }
 
-    public int getCustomerNumber() {
+    public Integer getCustomerNumber() {
         return customerNumber;
     }
 
-    public void setCustomerNumber(int customerNumber) {
+    public void setCustomerNumber(Integer customerNumber) {
         this.customerNumber = customerNumber;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

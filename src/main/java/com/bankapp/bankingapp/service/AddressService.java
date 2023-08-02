@@ -24,7 +24,6 @@ public class AddressService {
     }
     @Transactional
     public Address create (AddressRequestDTO addressRequestDTO) {
-        validateAddress(addressRequestDTO);
 
         Address address = mapToEntity(addressRequestDTO);
         address = addressRepository.save(address);
@@ -78,22 +77,5 @@ public class AddressService {
         return addressRepository.findById(id);
     }
 
-    private void validateAddress(AddressRequestDTO addressRequestDTO) {
-        if (addressRequestDTO.getCity().isEmpty()) {
-            throw new EmptyResourceException("La ciudad no puede estar vacía.");
-        }
-        if (addressRequestDTO.getCountry().isEmpty()) {
-            throw new EmptyResourceException("El país no puede estar vacío.");
-        }
-        if (addressRequestDTO.getState().isEmpty()) {
-            throw new EmptyResourceException("La provincia no puede estar vacía.");
-        }
-        if (addressRequestDTO.getPostalCode().isEmpty()) {
-            throw new EmptyResourceException("El código postal no puede estar vacío.");
-        }
-        if (addressRequestDTO.getStreet().isEmpty()) {
-            throw new EmptyResourceException("La calle no puede estar vacía.");
-        }
-    }
 
 }
