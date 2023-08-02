@@ -1,15 +1,13 @@
 package com.bankapp.bankingapp.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Customer extends Person {
+    @Column(unique = true)
     private int customerNumber;
     @OneToMany(mappedBy = "accountHolder", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Account> accountList;

@@ -6,6 +6,7 @@ import com.bankapp.bankingapp.DTO.response.AddressResponseDTO;
 import com.bankapp.bankingapp.DTO.response.CustomerResponseDTO;
 import com.bankapp.bankingapp.entity.Address;
 import com.bankapp.bankingapp.entity.Customer;
+import com.bankapp.bankingapp.exceptions.EmptyResourceException;
 import com.bankapp.bankingapp.exceptions.ExistingResourceException;
 import com.bankapp.bankingapp.exceptions.ResourceNotFoundException;
 import com.bankapp.bankingapp.repository.CustomerRepository;
@@ -30,32 +31,48 @@ public class CustomerService {
 
     @Transactional
     public Customer create(CustomerRequestDTO customerRequestDTO) {
-        Optional<Customer> customerOptional = findByCustomerNumber(customerRequestDTO.getCustomerNumber());
-        if (customerOptional.isEmpty()){
-            Address address = addressService.create(customerRequestDTO.getAddressRequestDTO());
+        // Chequeo que el nro de cliente sea único
+//        Optional<Customer> customerOptional = findByCustomerNumber(customerRequestDTO.getCustomerNumber());
+//        if (customerOptional.isEmpty()){
+//            Address address = addressService.create(customerRequestDTO.getAddressRequestDTO());
+//
+//            Customer customer = mapToEntity(customerRequestDTO);
+//            customer.setAddress(address);
+//            customer = customerRepository.save(customer);
+//
+//            return customer;
+//        } else {
+//            throw new ExistingResourceException("El número de cliente debe ser único. Seleccione uno diferente.");
+//        }
 
-            Customer customer = mapToEntity(customerRequestDTO);
-            customer.setAddress(address);
-            customer = customerRepository.save(customer);
+        // Cargo los datos de la dirección
 
-            return customer;
-        } else {
-            throw new ExistingResourceException("El número de cliente debe ser único. Seleccione uno diferente.");
-        }
-    }
+        Customer customer = mapToEntity(customerRequestDTO);
+        customer = customerRepository.save(customer);
 
-    public Customer getOrCreate(CustomerRequestDTO customerRequestDTO) {
+        Address address = addressService.create(customerRequestDTO.getAddressRequestDTO());
+        customer.setAddress(address);
 
-        Optional<Customer> customerOptional = customerRepository.findByCardNumber(customerRequestDTO.getCardNumber());
-        Customer customer = null;
+        customer = customerRepository.save(customer);
 
-        if (customerOptional.isEmpty()){
-            customer = create(customerRequestDTO);
-        } else {
-            customer = customerOptional.get();
-        }
         return customer;
+
     }
+
+//    public Customer getOrCreate(CustomerRequestDTO customerRequestDTO) {
+//
+//        // valido que no exista un cliente con el mismo nro de DNI
+//        Optional<Customer> customerOptional = customerRepository.findByCardNumber(customerRequestDTO.getCardNumber());
+//        Customer customer = null;
+//
+//        if (customerOptional.isEmpty()){
+//            //Como no existe ningún cliente con ese DNI, ahora si lo creo
+//            customer = create(customerRequestDTO);
+//        } else {
+//            customer = customerOptional.get();
+//        }
+//        return customer;
+//    }
 
     public List<CustomerResponseDTO> retrieveAll() {
         List<Customer> customerList = customerRepository.findAll();
@@ -96,6 +113,32 @@ public class CustomerService {
         AddressResponseDTO addressResponseDTO = addressService.mapToDTO(customer.getAddress());
         customerDTO.setAddressReponseDTO(addressResponseDTO);
         return customerDTO;
+    }
+    public void validateCustomer(CustomerRequestDTO customerRequestDTO) {
+        if (customerRequestDTO.getCardNumber().isEmpty()) {
+            throw new EmptyResourceException();
+        }
+        if (customerRequestDTO.getName().isEmpty()) {
+            throw new EmptyResourceException();
+        }
+        if (customerRequestDTO.getLastName().isEmpty()) {
+            throw new EmptyResourceException();
+        }
+        if (customerRequestDTO.getEmail().isEmpty()) {
+            throw new EmptyResourceException();
+        }
+        if (customerRequestDTO.getPhoneNumber() == null ) {
+            throw new EmptyResourceException();
+        }
+        if (customerRequestDTO.getCardNumber() == null ) {
+            throw new EmptyResourceException();
+        }
+        if (customerRequestDTO.getCustomerNumber() == null ) {
+            throw new EmptyResourceException();
+        }
+        if (customerRequestDTO.getAddressRequestDTO() == null ) {
+            throw new EmptyResourceException();
+        }
     }
 
     private Customer mapToEntity(CustomerRequestDTO customerRequestDTO) {
