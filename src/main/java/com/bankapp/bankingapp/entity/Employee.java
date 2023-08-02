@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 public class Employee extends Person {
-
+    @Column (unique = true)
     private int employeeNumber;
     @ManyToOne
     @JoinColumn(name = "branch_id")

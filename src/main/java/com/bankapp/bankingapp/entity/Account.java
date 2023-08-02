@@ -1,5 +1,6 @@
 package com.bankapp.bankingapp.entity;
 
+import com.bankapp.bankingapp.exceptions.InsufficientBalanceException;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,6 +9,8 @@ public abstract class Account {
     @Id
     @Column (unique = true)
     protected String accountNumber;
+
+    protected String cbu;
     protected boolean active;
     protected double balance;
     @Column (unique = true)
@@ -27,12 +30,13 @@ public abstract class Account {
     public Account() {
     }
 
-    public Account(String alias, Branch branch, Customer accountHolder) {
+    public Account(String alias, Branch branch, Customer accountHolder, String cbu) {
         this.active = true;
         this.balance = 0.00d;
         this.alias = alias;
         this.branch = branch;
         this.accountHolder = accountHolder;
+        this.cbu = cbu;
     }
 
     public String getAccountNumber() {
@@ -91,7 +95,42 @@ public abstract class Account {
         this.active = active;
     }
 
+    public String getCbu() {
+        return cbu;
+    }
+
+    public void setCbu(String cbu) {
+        this.cbu = cbu;
+    }
+
     public abstract String getType();
 
+    public  void withdraw(double amount) { // Extraer. Templated method
+        if (checkAvailableBalance(amount)) {
+            descontarMonto(amount);
+        } else {
+            throw new InsufficientBalanceException();
+        }
+    }
+
+    public void descontarMonto(double amount) {
+        this.balance -= amount;
+    }
+
+    public abstract boolean checkAvailableBalance(double amount); //
+
+    public void toDeposit(double amount) {
+        this.balance += amount;
+    }
+    public void toTransfer(double amount, Account account){
+        this.withdraw(amount);
+        account.toDeposit(amount);
+
+    } //Cadena de responsabilidades patron: this.extraer()
+
+    public void generateCBU(){
+        cbu = getBranch().getBank().getBankCode() + getBranch().getBranchCode() + getAccountNumber();
+        setCbu(cbu);
+    }
 
 }
