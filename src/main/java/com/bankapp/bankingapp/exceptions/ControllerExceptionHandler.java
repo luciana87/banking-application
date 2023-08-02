@@ -40,7 +40,20 @@ public class ControllerExceptionHandler {
     //Excepción lanzada por las validaciones con spring para campos duplicados
     @ExceptionHandler (SQLIntegrityConstraintViolationException.class)
     public ResponseEntity handleException(SQLIntegrityConstraintViolationException e) {
+        return new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler (InsufficientBalanceException.class)
+    public ResponseEntity handleException(InsufficientBalanceException e) {
         return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex) {
+        // Obtener el primer error de validación
+        String errorMessage = ex.getBindingResult().getFieldError().getDefaultMessage();
+        // Devolver una respuesta con código 400 y el mensaje de error
+        return ResponseEntity.badRequest().body(errorMessage);
     }
 
 }
