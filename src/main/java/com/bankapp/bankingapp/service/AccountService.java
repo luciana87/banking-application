@@ -134,7 +134,7 @@ public class AccountService {
         }
         Account toAccount = toAccountOptional.get();
 
-        fromAccount.toTransfer(transferRequestDTO.getAmount(), toAccount);
+        fromAccount.transfer(transferRequestDTO.getAmount(), toAccount);
 
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
@@ -158,7 +158,7 @@ public class AccountService {
         }
 
         Account account = accountOptional.get();
-        account.toDeposit(amountDTO.getAmount());
+        account.deposit(amountDTO.getAmount());
 
         accountRepository.save(account);
 

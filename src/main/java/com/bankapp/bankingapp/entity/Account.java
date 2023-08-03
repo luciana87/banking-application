@@ -119,12 +119,12 @@ public abstract class Account {
 
     public abstract boolean checkAvailableBalance(double amount); //
 
-    public void toDeposit(double amount) {
+    public void deposit(double amount) {
         this.balance += amount;
     }
-    public void toTransfer(double amount, Account account){
+    public void transfer(double amount, Account account){
         this.withdraw(amount);
-        account.toDeposit(amount);
+        account.deposit(amount);
 
     } //Cadena de responsabilidades patron: this.extraer()
 
