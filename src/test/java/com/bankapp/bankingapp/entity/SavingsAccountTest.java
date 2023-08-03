@@ -49,7 +49,7 @@ class SavingsAccountTest {
     }
 
     @Test
-    @DisplayName("Extraigo mismo monto que el saldo positivo de cuenta corriente")
+    @DisplayName("Extraigo mismo monto que el saldo positivo de caja de ahorro")
     void testDepositar(){
 
         SavingsAccount savingsAccount = new SavingsAccount();
@@ -61,5 +61,37 @@ class SavingsAccountTest {
         assertEquals(savingsAccount.getBalance(), 2000);
     }
 
+    @Test
+    @DisplayName("Transfeir monto cuenta origen hacia cuenta destino ok, caja de ahorro")
+    void testTransferirDeCuentaOrigenACuentaDestino(){
+
+        SavingsAccount fromAccount = new SavingsAccount();
+        fromAccount.setBalance(1000);
+
+        SavingsAccount toAccount = new SavingsAccount();
+        toAccount.setBalance(100);
+
+        double amount = 500;
+
+        fromAccount.transfer(amount, toAccount);
+
+        assertEquals(toAccount.getBalance(), 600);
+        assertEquals(fromAccount.getBalance(), 500);
+    }
+
+    @Test
+    @DisplayName("Transfeir monto cuenta origen sin saldo hacia cuenta destino lanza excepción, caja de ahorro")
+    void testTransferirDeCuentaOrigenSinSaldoACuentaDestino(){
+
+        SavingsAccount fromAccount = new SavingsAccount();
+        fromAccount.setBalance(100);
+
+        SavingsAccount toAccount = new SavingsAccount();
+        toAccount.setBalance(100);
+
+        double amount = 500;
+
+        assertThrows(InsufficientBalanceException.class, () -> fromAccount.transfer(amount, toAccount));
+    }
 
 }
