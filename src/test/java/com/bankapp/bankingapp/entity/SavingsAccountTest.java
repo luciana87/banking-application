@@ -48,4 +48,18 @@ class SavingsAccountTest {
         assertEquals(currentAccount.getBalance(), 0);
     }
 
+    @Test
+    @DisplayName("Extraigo mismo monto que el saldo positivo de cuenta corriente")
+    void testDepositar(){
+
+        SavingsAccount savingsAccount = new SavingsAccount();
+        savingsAccount.setBalance(1000);
+        double amount = 1000;
+
+        savingsAccount.deposit(amount);
+
+        assertEquals(savingsAccount.getBalance(), 2000);
+    }
+
+
 }
