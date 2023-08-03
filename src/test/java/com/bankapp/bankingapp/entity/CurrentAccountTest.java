@@ -86,9 +86,42 @@ class CurrentAccountTest {
         currentAccount.setBalance(1000);
         double amount = 1000;
 
-        currentAccount.toDeposit(amount);
+        currentAccount.deposit(amount);
 
         assertEquals(currentAccount.getBalance(), 2000);
+    }
+
+    @Test
+    @DisplayName("Transfeir monto cuenta origen hacia cuenta destino ok, cuenta corriente")
+    void testTransferirDeCuentaOrigenACuentaDestino(){
+
+        CurrentAccount fromAccount = new CurrentAccount();
+        fromAccount.setBalance(1000);
+
+        SavingsAccount toAccount = new SavingsAccount();
+        toAccount.setBalance(100);
+
+        double amount = 500;
+
+        fromAccount.transfer(amount, toAccount);
+
+        assertEquals(toAccount.getBalance(), 600);
+        assertEquals(fromAccount.getBalance(), 500);
+    }
+
+    @Test
+    @DisplayName("Transfeir monto cuenta origen sin saldo hacia cuenta destino ok, cuenta corriente")
+    void testTransferirDeCuentaOrigenSinSaldoACuentaDestino(){
+
+        CurrentAccount fromAccount = new CurrentAccount();
+        fromAccount.setBalance(100);
+
+        SavingsAccount toAccount = new SavingsAccount();
+        toAccount.setBalance(100);
+
+        double amount = 500;
+
+        assertThrows(InsufficientBalanceException.class, () -> fromAccount.transfer(amount, toAccount));
     }
 
 }
