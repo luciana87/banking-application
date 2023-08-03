@@ -110,7 +110,7 @@ class CurrentAccountTest {
     }
 
     @Test
-    @DisplayName("Transfeir monto cuenta origen sin saldo hacia cuenta destino ok, cuenta corriente")
+    @DisplayName("Transfeir monto cuenta origen sin saldo hacia cuenta destino lanza excepción, cuenta corriente")
     void testTransferirDeCuentaOrigenSinSaldoACuentaDestino(){
 
         CurrentAccount fromAccount = new CurrentAccount();
